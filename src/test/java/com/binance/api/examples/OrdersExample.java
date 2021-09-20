@@ -6,11 +6,7 @@ import com.binance.api.client.domain.TimeInForce;
 import com.binance.api.client.domain.account.NewOrderResponse;
 import com.binance.api.client.domain.account.NewOrderResponseType;
 import com.binance.api.client.domain.account.Order;
-import com.binance.api.client.domain.account.request.AllOrdersRequest;
-import com.binance.api.client.domain.account.request.CancelOrderRequest;
-import com.binance.api.client.domain.account.request.CancelOrderResponse;
-import com.binance.api.client.domain.account.request.OrderRequest;
-import com.binance.api.client.domain.account.request.OrderStatusRequest;
+import com.binance.api.client.domain.account.request.*;
 import com.binance.api.client.exception.BinanceApiException;
 
 import java.util.List;
@@ -30,6 +26,10 @@ public class OrdersExample {
     // Getting list of open orders
     List<Order> openOrders = client.getOpenOrders(new OrderRequest("LINKETH"));
     System.out.println(openOrders);
+
+    // Getting list of all open orders
+    List<Order> allOpenOrders = client.getAllOpenOrders(new AllOpenOrdersRequest());
+    System.out.println(allOpenOrders);
 
     // Getting list of all orders with a limit of 10
     List<Order> allOrders = client.getAllOrders(new AllOrdersRequest("LINKETH").limit(10));
