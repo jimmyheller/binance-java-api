@@ -77,7 +77,8 @@ public interface BinanceApiService {
     @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER)
     @POST("/api/v3/order")
     Call<NewOrderResponse> newOrder(@Query("symbol") String symbol, @Query("side") OrderSide side, @Query("type") OrderType type,
-                                    @Query("timeInForce") TimeInForce timeInForce, @Query("quantity") String quantity, @Query("price") String price,
+                                    @Query("timeInForce") TimeInForce timeInForce,
+                                    @Query("quantity") String quantity, @Query("price") String price,
                                     @Query("newClientOrderId") String newClientOrderId, @Query("stopPrice") String stopPrice,
                                     @Query("icebergQty") String icebergQty, @Query("newOrderRespType") NewOrderResponseType newOrderRespType,
                                     @Query("recvWindow") Long recvWindow, @Query("timestamp") Long timestamp);
@@ -127,8 +128,8 @@ public interface BinanceApiService {
     @POST("/api/v3/order/oco")
     Call<NewOCOResponse> newOCO(@Query("symbol") String symbol, @Query("listClientOrderId") String listClientOrderId, @Query("side") OrderSide side,
                                 @Query("quantity") String quantity, @Query("limitClientOrderId") String limitClientOrderId, @Query("price") String price,
-                                @Query("limitIcebergQty") String limitIcebergQty, @Query("stopClientOrderId")String stopClientOrderId, @Query("stopPrice") String stopPrice,
-                                @Query("stopLimitPrice")String stopLimitPrice, @Query("stopIcebergQty") String stopIcebergQty, @Query("stopLimitTimeInForce") TimeInForce stopLimitTimeInForce,
+                                @Query("limitIcebergQty") String limitIcebergQty, @Query("stopClientOrderId") String stopClientOrderId, @Query("stopPrice") String stopPrice,
+                                @Query("stopLimitPrice") String stopLimitPrice, @Query("stopIcebergQty") String stopIcebergQty, @Query("stopLimitTimeInForce") TimeInForce stopLimitTimeInForce,
                                 @Query("newOrderRespType") NewOrderResponseType newOrderRespType, @Query("recvWindow") Long recvWindow, @Query("timestamp") long timestamp);
 
     @Headers(BinanceApiConstants.ENDPOINT_SECURITY_TYPE_SIGNED_HEADER)

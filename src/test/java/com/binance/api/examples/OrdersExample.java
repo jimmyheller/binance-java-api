@@ -24,43 +24,51 @@ import static com.binance.api.client.domain.account.NewOrder.marketBuy;
  */
 public class OrdersExample {
 
-  public static void main(String[] args) {
-    BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance("YOUR_API_KEY", "YOUR_SECRET");
-    BinanceApiRestClient client = factory.newRestClient();
+    public static void main(String[] args) {
+        BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance("pXONV6u97xgMLxGSWpZY00LQN6mAjSWUWKvyjZoRQsQUbcKsSwagM1laZG5cScz7", "YmnZvrHDbjH7KLV8Dn9d8iuTogMgtyMZQL02M5JHUxjqF9YegG3KuiMqYlYyp6Ak");
+        BinanceApiRestClient client = factory.newRestClient();
 
-    // Getting list of open orders
-    List<Order> openOrders = client.getOpenOrders(new OrderRequest("LINKETH"));
-    System.out.println(openOrders);
+        // Getting list of open orders
+        List<Order> openOrders = client.getOpenOrders(new OrderRequest("LINKETH"));
+        System.out.println(openOrders);
 
-    // Getting list of all open orders
-    List<Order> allOpenOrders = client.getAllOpenOrders(new AllOpenOrdersRequest());
-    System.out.println(allOpenOrders);
+        // Getting list of all open orders
+        List<Order> allOpenOrders = client.getAllOpenOrders(new AllOpenOrdersRequest());
+        System.out.println(allOpenOrders);
 
-    // Getting list of all orders with a limit of 10
-    List<Order> allOrders = client.getAllOrders(new AllOrdersRequest("LINKETH").limit(10));
-    System.out.println(allOrders);
+        // Getting list of all orders with a limit of 10
+        List<Order> allOrders = client.getAllOrders(new AllOrdersRequest("LINKETH").limit(10));
+        System.out.println(allOrders);
 
-    // Get status of a particular order
-    Order order = client.getOrderStatus(new OrderStatusRequest("LINKETH", 751698L));
-    System.out.println(order);
+        // Get status of a particular order
+        try {
+            Order order = client.getOrderStatus(new OrderStatusRequest("LINKETH", 751698L));
+            System.out.println(order);
+        } catch (BinanceApiException e) {
+            System.err.println(e);
+        }
 
-    // Canceling an order
-    try {
-      CancelOrderResponse cancelOrderResponse = client.cancelOrder(new CancelOrderRequest("LINKETH", 756762l));
-      System.out.println(cancelOrderResponse);
-    } catch (BinanceApiException e) {
-      System.out.println(e.getError().getMsg());
+        // Canceling an order
+        try {
+            CancelOrderResponse cancelOrderResponse = client.cancelOrder(new CancelOrderRequest("LINKETH", 756762l));
+            System.out.println(cancelOrderResponse);
+        } catch (BinanceApiException e) {
+            System.out.println(e.getError().getMsg());
+        }
+
+        // Placing a test LIMIT order
+        try {
+            client.newOrder(limitBuy("LINKETH", TimeInForce.GTC, "1000", "0.0001"));
+        } catch (BinanceApiException e) {
+            e.printStackTrace();
+        }
+
+        // Placing a test MARKET order
+        client.newOrderTest(marketBuy("LINKETH", "1000"));
+
+        // Placing a real LIMIT order
+        NewOrderResponse newOrderResponse = client.newOrder(limitBuy("LINKETH", TimeInForce.GTC, "1000", "0.0001").newOrderRespType(NewOrderResponseType.FULL));
+        System.out.println(newOrderResponse);
     }
-
-    // Placing a test LIMIT order
-    client.newOrderTest(limitBuy("LINKETH", TimeInForce.GTC, "1000", "0.0001"));
-
-    // Placing a test MARKET order
-    client.newOrderTest(marketBuy("LINKETH", "1000"));
-
-    // Placing a real LIMIT order
-    NewOrderResponse newOrderResponse = client.newOrder(limitBuy("LINKETH", TimeInForce.GTC, "1000", "0.0001").newOrderRespType(NewOrderResponseType.FULL));
-    System.out.println(newOrderResponse);
-  }
 
 }
